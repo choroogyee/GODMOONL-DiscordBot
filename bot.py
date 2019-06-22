@@ -30,7 +30,7 @@ async def on_ready():
     for i in app.servers:
         sum += len(i.members)
     while True:
-        await app.change_presence(game=discord.Game(name='`!도움` 이라고 해보세요!'))
+        await app.change_presence(game=discord.Game(name='`=도움` 을 입력해보세요!'))
         await asyncio.sleep(30)
         await app.change_presence(game=discord.Game(name=str(servers)+'개의 서버 | '+str(sum)+'명의 유저'))
         await asyncio.sleep(30)
@@ -39,25 +39,25 @@ async def on_ready():
 async def on_message(message):
     if message.author.bot:
         return None
-    if message.content == '!도움':
+    if message.content == '=도움':
         r = open('update.txt',mode='rt',encoding = 'utf-8')
         rows = r.readlines()
-        e = embed(title = '갓봇 도움!',description = '갓봇 명령어를 불러옵니다',color=0x00C853)
+        e = embed(title = '봇 기능',description = '봇에대한 기능을 보여줍니다.',color=0xffc0cb)
         for i in rows:
             e.add_field(name = i.split('/')[0],value=i.split('/')[1])
-        e.set_footer(text='개발자 : GODMOONL#7059')
+        e.set_footer(text='문의:초롱이YT#3632')
         await app.send_message(message.channel,embed=e)
-    if message.content.startswith('!공지 '):
+    if message.content.startswith('=공지 '):
         m = message.content[4:]
         if message.author.id == '528205968614490122':
             for servers in app.servers:
                 for channel in servers.channels:
                     if channel.name =='공지사항':
                         e = embed(title = '공지',description=m)
-                        e.set_footer(text = '문의 : GODMOONL#7059')
+                        e.set_footer(text = '문의:초롱이YT#3632')
                         await app.send_message(channel,embed=e)
 
-    if message.content == '!정보':
+    if message.content == '=정보':
         end = time.time()-uptime
         ut = int(end)
         min = int(ut/60)
@@ -66,11 +66,11 @@ async def on_message(message):
         hour = str(hour%24)
         ut=str(ut%60)
         min=str(min%60)
-        e = embed(title="갓봇 정보!", description="개발자 : GODMOONL#7059\n업타임 : "+day+"일 "+hour+"시간 "+min+"분 "+ut+"초 ", color=0x00C853)
+        e = embed(title="=초롱봇 정보", description="출처 : https://github.com/godmoonl/GODMOONL-DiscordBot\n업타임 : "+day+"일 "+hour+"시간 "+min+"분 "+ut+"초 ", color=0xffc0cb)
         await app.send_message(message.channel,embed=e)
 
-    if message.content == '!서버리스트':
-        e = embed(title = '갓봇 서버리스트!',description = '갓봇이 있는 서버를 불러옵니다', color=0x00C853)
+    if message.content == '=서버리스트':
+        e = embed(title = '초롱봇 서버리스트!',description = '초롱봇이 있는 서버를 불러오겠다.', color=0xffc0cb)
         for i,s in enumerate(app.servers):
             e.add_field(name=i+1,value=s.name)
         await app.send_message(message.channel,embed=e)       
@@ -78,46 +78,46 @@ async def on_message(message):
         if message.content == a[i]:
             await app.send_message(message.channel,random.choice(b[i]))
 
-    if message.content.startswith('!따라해 '):
-        ans = message.content.split('!따라해')[1]
+    if message.content.startswith('=따라해 '):
+        ans = message.content.split('=따라해')[1]
         await app.send_message(message.channel,ans)
     
-    if message.content.startswith('!골라 '): 
-        tmp = message.content.split('!골라 ')[1]
+    if message.content.startswith('=골라 '): 
+        tmp = message.content.split('=골라 ')[1]
         ans = random.choice(tmp.split('/'))
-        e = embed(title="갓봇의 선택은?",description=ans,color=0x00C853)
+        e = embed(title="초롱봇의 선택은?",description=ans,color=0xffc0cb)
         await app.send_message(message.channel,embed=e)
 
-    if message.content.startswith('!확률 '):
+    if message.content.startswith('=확률 '):
         ans = str(random.randrange(0,100))
-        q = message.content.split('!확률 ')[1]
-        e = embed(title=q+"은?",description=ans+"%입니다",color=0x00C853)
+        q = message.content.split('=확률 ')[1]
+        e = embed(title=q+"은?",description=ans+"%입니다",color=0xffc0cb)
         await app.send_message(message.channel,embed=e)
 
-    if message.content == '!프사':
-        e = embed(title="당신의 프로필 사진",color=0x00C853)
+    if message.content == '=프사':
+        e = embed(title="당신의 프로필 사진",color=0xffc0cb)
         e.set_image(url=message.author.avatar_url)
         await app.send_message(message.channel,embed=e)    
 
-    if message.content.startswith('!프사 '):
-        e = embed(title="맨션한 사용자의 프로필 사진",color=0x00C853)
+    if message.content.startswith('=프사 '):
+        e = embed(title="맨션한 사용자의 프로필 사진",color=0xffc0cb)
         if not message.mentions:
-            e = embed(title="에러!",description="에러 발생")
+            e = embed(title="에러!",description="에러가 발생하였습니다.")
             await app.send_message(message.channel,embed=e)
         else:
             user = message.mentions[0]
             e.set_image(url=user.avatar_url)
             await app.send_message(message.channel,embed=e)
             
-    if message.content == '!돈순위':	
+    if message.content == '=돈순위':	
         cur.execute('SELECT * FROM users ORDER BY money DESC')	
         l = cur.fetchall()	
-        e = embed(title = "돈순위!",description="돈순위 상위 5명을 불러옵니다",color=0x00C853)	
+        e = embed(title = "돈순위",description="돈순위 TOP5를 불러오겠다.",color=0xffc0cb)	
         for i in range(0,5):	
             e.add_field(name =str(i+1)+'위',value='<@%s>\n%d원'%(l[i][1],l[i][0]))	
         await app.send_message(message.channel,embed=e)	
 
-    if message.content == '!돈줘':	
+    if message.content == '=돈줘':	
         uid = message.author.id	
         cur.execute('SELECT * FROM users WHERE id=?',[uid])	
         l = cur.fetchone()	
@@ -134,16 +134,16 @@ async def on_message(message):
             cur.execute('UPDATE users SET money = ?, time=? WHERE id = ?',(m,time.time(),uid))	
             conn.commit()	
         if m=="":	
-            e = embed(title="오류",description='돈은 5분에 한번씩 받을 수 있습니다 \n'+str(int((l[2]+300)-time.time()))+'초 남았습니다',color=0xF44336)	
+            e = embed(title="안되!",description='돈은 5분에 한번씩 지급이 가능하다. \n'+str(int((l[2]+300)-time.time()))+'초 남았습니다',color=0xF44336)	
         else:	
-            e = embed(title = "돈을 받았습니다.",description = '당신의 돈은 '+m+'원입니다',color=0x00C853)	
+            e = embed(title = "돈을 주겠다.",description = '사용자의 돈은 '+m+'원이다',color=0x00C853)	
         await app.send_message(message.channel,embed=e)
 
-    if message.content.startswith('!위키 '):
+    if message.content.startswith('=위키 '):
         m = message.content[4:]
         ans = test.wiki(m)
         if not ans:
-            e = embed(title = '오류',description = '위키피디아에 없는 문서입니다')
+            e = embed(title = '흐음...',description = '위키피디아에 없는 문서군.')
             await app.send_message(message.channel,embed=e)
         else:
             e = embed(title = m+" 검색결과")
@@ -151,11 +151,11 @@ async def on_message(message):
             e.set_footer(text='ko.wikipedia.org 위키피디아')
             await app.send_message(message.channel,embed=e)
 
-    if message.content.startswith('!나무위키 '):
+    if message.content.startswith('=나무위키 '):
         m = message.content[6:]
         ans = test.namu(m)
         if not ans:
-            e = embed(title = '오류',description = '나무위키에 없는 문서입니다')
+            e = embed(title = '흐음...',description = '나무위키에 없는 문서군')
             await app.send_message(message.channel,embed=e)
         else:
             e = embed(title = m+" 검색결과",color=0x00A495)
@@ -163,7 +163,7 @@ async def on_message(message):
             e.set_footer(text='namu.wiki 나무위키')
             await app.send_message(message.channel,embed=e)
 
-    if message.content.startswith('!날씨 '):
+    if message.content.startswith('=날씨 '):
         m = message.content[4:]
         ans = test.Weather(m)
         if not ans:            
@@ -178,7 +178,7 @@ async def on_message(message):
             e.set_footer(text='naver.com 네이버')
             await app.send_message(message.channel,embed=e)
 
-    if message.content.startswith('!영어위키 '):
+    if message.content.startswith('=영어위키 '):
         m = message.content[6:]
         ans = test.enwiki(m)
         if not ans:
@@ -190,8 +190,8 @@ async def on_message(message):
             e.set_footer(text='en.wikipedia.org 위키피디아')
             await app.send_message(message.channel,embed=e)
 
-    if message.content == '!멜론':
-        e = embed(title='멜론차트 TOP 10',description = '멜론차트 상위 10위를 불러옵니다',color = 0x04D939)
+    if message.content == '=멜론':
+        e = embed(title='멜론차트 TOP 10',description = '멜론차트 상위 10위를 불러옵니다',color = 0xffc0cb)
         ans = test.Melon()
         for i in range(10):
             e.add_field(name = i+1,value = ans.tag[i].text+' - '+ans.a[i].text)
